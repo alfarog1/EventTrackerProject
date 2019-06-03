@@ -1,0 +1,5 @@
+package com.skilldistillery.paintracker.controllers;
+
+public class PainController {
+
+}

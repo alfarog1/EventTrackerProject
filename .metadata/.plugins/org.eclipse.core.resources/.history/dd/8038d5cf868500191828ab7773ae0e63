@@ -1,0 +1,5 @@
+package com.skilldistillery.paintracker.entities;
+
+public class Pain {
+
+}

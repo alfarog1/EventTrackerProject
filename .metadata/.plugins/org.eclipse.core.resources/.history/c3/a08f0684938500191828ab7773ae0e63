@@ -1,0 +1,15 @@
+package com.skilldistillery.paintracker.services;
+
+import java.util.List;
+
+import com.skilldistillery.paintracker.entities.Pain;
+
+public class PainServiceImpl implements PainService {
+
+	@Override
+	public List<Pain> allPains() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

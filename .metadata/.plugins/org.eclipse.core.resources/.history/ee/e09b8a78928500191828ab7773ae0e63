@@ -1,0 +1,25 @@
+package com.skilldistillery.paintracker.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.skilldistillery.paintracker.entities.Pain;
+import com.skilldistillery.paintracker.services.PainService;
+
+@RestController
+@RequestMapping("api")
+public class PainController {
+	
+	
+	@Autowired
+	private PainService svc;
+
+	@GetMapping("pains")
+	public List<Pain> index(){
+		return svc.allPains();
+		
+}

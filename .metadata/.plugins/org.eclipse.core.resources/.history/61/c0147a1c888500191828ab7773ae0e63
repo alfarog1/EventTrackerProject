@@ -1,0 +1,27 @@
+package com.skilldistillery.paintracker.entities;
+
+import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Pain {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	private String painLocation;
+	
+	private int intensity;
+	
+	private Date painStartDate;
+	
+	private Date painEndDate;
+	
+	private String trigger;
+	
+	private String typeOfPain;
+}

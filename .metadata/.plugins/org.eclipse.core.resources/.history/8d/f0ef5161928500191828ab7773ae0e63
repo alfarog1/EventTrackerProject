@@ -1,0 +1,5 @@
+package com.skilldistillery.paintracker.services;
+
+public interface PainService {
+
+}

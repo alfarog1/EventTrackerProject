@@ -1,0 +1,23 @@
+package com.skilldistillery.paintracker.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.skilldistillery.paintracker.entities.Pain;
+import com.skilldistillery.paintracker.repositories.PainRepository;
+@Service
+public class PainServiceImpl implements PainService {
+
+	@Autowired
+	private PainRepository repo;
+	
+	@Override
+	public List<Pain> allPains() {
+		return repo.findAll();
+	}
+	
+
+
+}

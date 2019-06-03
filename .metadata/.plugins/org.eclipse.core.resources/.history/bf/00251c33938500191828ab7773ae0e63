@@ -1,0 +1,9 @@
+package com.skilldistillery.paintracker.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.skilldistillery.paintracker.entities.Pain;
+
+public interface PainRepository extends JpaRepository<Pain, Integer> {
+
+}

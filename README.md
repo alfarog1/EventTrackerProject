@@ -16,7 +16,7 @@
 This application is made for pain management. The purpose is to track pain. Not only location, but intensity, triggers that caused the pain, but also start and end points. This makes it easier to diagnose the recurring issues.
 
 How To Operate
-The app is located at http://52.26.41.223:8087/paintracker/api/
+The app is located at http://52.26.41.223:8080/PainTrackerREST/api/
 
 API Routes
 

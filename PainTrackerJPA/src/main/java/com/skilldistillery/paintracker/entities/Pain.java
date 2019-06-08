@@ -1,6 +1,6 @@
 package com.skilldistillery.paintracker.entities;
 
-import java.sql.Date;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,12 +21,12 @@ public class Pain {
 	private int intensity;
 	@Column(name="pain_start_date")
 //	@Temporal(TemporalType.DATE)
-	private Date painStartDate;
+	private String painStartDate;
 	@Column(name="pain_end_date")
 //	@Temporal(TemporalType.DATE)
-	private Date painEndDate;
-	
-	private String trigger;
+	private String painEndDate;
+	@Column(name = "pain_trigger")
+	private String painTrigger;
 	@Column(name = "type_of_pain")
 	private String typeOfPain;
 	public int getId() {
@@ -47,37 +47,28 @@ public class Pain {
 	public void setIntensity(int intensity) {
 		this.intensity = intensity;
 	}
-	public Date getPainStartDate() {
+	public String getPainStartDate() {
 		return painStartDate;
 	}
-	public void setPainStartDate(Date painStartDate) {
+	public void setPainStartDate(String painStartDate) {
 		this.painStartDate = painStartDate;
 	}
-	public Date getPainEndDate() {
+	public String getPainEndDate() {
 		return painEndDate;
 	}
-	public void setPainEndDate(Date painEndDate) {
+	public void setPainEndDate(String painEndDate) {
 		this.painEndDate = painEndDate;
 	}
-	public String getTrigger() {
-		return trigger;
-	}
-	public void setTrigger(String trigger) {
-		this.trigger = trigger;
-	}
+
 	public String getTypeOfPain() {
 		return typeOfPain;
 	}
 	public void setTypeOfPain(String typeOfPain) {
 		this.typeOfPain = typeOfPain;
 	}
-	@Override
-	public String toString() {
-		return "Pain [id=" + id + ", painLocation=" + painLocation + ", intensity=" + intensity + ", painStartDate="
-				+ painStartDate + ", painEndDate=" + painEndDate + ", trigger=" + trigger + ", typeOfPain=" + typeOfPain
-				+ "]";
-	}
-	public Pain(int id, String painLocation, int intensity, Date painStartDate, Date painEndDate, String trigger,
+	
+
+	public Pain(int id, String painLocation, int intensity, String painStartDate, String painEndDate, String painTrigger,
 			String typeOfPain) {
 		super();
 		this.id = id;
@@ -85,8 +76,20 @@ public class Pain {
 		this.intensity = intensity;
 		this.painStartDate = painStartDate;
 		this.painEndDate = painEndDate;
-		this.trigger = trigger;
+		this.painTrigger = painTrigger;
 		this.typeOfPain = typeOfPain;
+	}
+	@Override
+	public String toString() {
+		return "Pain [id=" + id + ", painLocation=" + painLocation + ", intensity=" + intensity + ", painStartDate="
+				+ painStartDate + ", painEndDate=" + painEndDate + ", painTrigger=" + painTrigger + ", typeOfPain="
+				+ typeOfPain + "]";
+	}
+	public String getPainTrigger() {
+		return painTrigger;
+	}
+	public void setPainTrigger(String painTrigger) {
+		this.painTrigger = painTrigger;
 	}
 	public Pain() {
 		super();

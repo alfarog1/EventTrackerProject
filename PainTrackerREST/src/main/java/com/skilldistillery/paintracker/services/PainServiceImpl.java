@@ -32,14 +32,23 @@ public class PainServiceImpl implements PainService {
 
 	@Override
 	public Pain findById(int id) {
-		return repo.findById(id).get();
+		try {
+			return repo.findById(id).get();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<Pain> findByPainTrigger( String keyword) {
+		return repo.findByPainTrigger(keyword);
 	}
 	
 	@Override
 	public Boolean deleteById(Integer id) {
 		Boolean deleted = true;
 		Optional<Pain> toDelete = repo.findById(id);
-		
+		repo.deleteById(id);
 		deleted = repo.existsById(toDelete.get().getId());
 		return deleted;
 	}

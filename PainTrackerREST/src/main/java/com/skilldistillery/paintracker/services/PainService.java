@@ -18,4 +18,6 @@ public interface PainService {
 
 	Pain updatePain(Integer id, Pain pain);
 
+	List<Pain> findByPainTrigger(String keyword);
+
 }

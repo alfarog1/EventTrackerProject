@@ -27,7 +27,7 @@ public class PainController {
 	@Autowired
 	private PainService svc;
 
-	@GetMapping("pains")
+	@GetMapping("pain")
 	public List<Pain> index() {
 		return svc.allPains();
 	}
@@ -36,7 +36,7 @@ public class PainController {
 	  public List<Pain> getPainWithinAnIntensityRange(@PathVariable int low,@PathVariable int high){
 		  return svc.allPainWithinAnIntensityRange(low, high);
 	  }
-
+	//CRUD - CREATE
 	@PostMapping("pain")
     public Pain addPain(@RequestBody Pain pain, HttpServletRequest req, HttpServletResponse resp) {
 		pain = svc.create(pain);
@@ -48,26 +48,31 @@ public class PainController {
         }
         return pain;
     }
-	
+	//CRUD - READ
 	@RequestMapping(path="pain/{id}", method=RequestMethod.GET)
-	 public Pain show(@PathVariable int id){
+	 public Pain show(@PathVariable int id, HttpServletResponse resp){
+		if (svc.findById(id) != null ) {
 	   return svc.findById(id);
+		} else {
+			resp.setStatus(404);
+		return null;
+		}
 	 }
-	
+	//CRUD - DELETE
 	 @DeleteMapping("pain/{id}")
-	    public void deleteComment(@PathVariable("id") Integer id, Integer cId,HttpServletResponse resp) {
-	        Boolean deleted = svc.deleteById(id);
-	        if (deleted != null) {
-	            if (deleted) {
-	                resp.setStatus(204);
-	            } else {
+	    public void deleteComment(@PathVariable("id") Integer id, HttpServletResponse resp) {
+	       
+	        if (svc.findById(id) != null) {
+	           if( svc.deleteById(id)) {
 	                resp.setStatus(404);
+	            } else {
+	                resp.setStatus(204);
 	            }
 	        } else {
-	            resp.setStatus(400);
+	            resp.setStatus(404);
 	        }
 	    }
-	 
+	 //CRUD - UPDATE
 	 @PutMapping("pain/{id}")
 	  @ResponseBody
 	  public Pain updatePain(@PathVariable Integer id, 

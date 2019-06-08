@@ -20,7 +20,7 @@ The app is located at http://52.26.41.223:8080/PainTrackerREST/api/
 
 API Routes
 
-* get all pains -> "pains"
+* get all pains -> "pain"
 * get pains by range of intensit -> "pain/search/intensity/{low}/{high}"
 	
 * Save pain to the tracker -> "pain"

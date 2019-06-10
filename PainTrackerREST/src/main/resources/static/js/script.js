@@ -7,28 +7,25 @@ window.addEventListener('load', function(e) {
 function init() {
   window.addEventListener('load', function(event) {
     event.preventDefault();
-    // var painId = document.painForm.painId.value;
-    // if (!isNaN(painId) && painId > 0) {
-    // getPain(painId);
 
-    // }
+    console.log("went to get pain");
+
+
   })
   document.painForm.addPain.addEventListener('click', function(event) {
     event.preventDefault();
     addPain();
   })
+
+
+
 }
 
 
 
 function getPain() {
-  // TODO:
-  // * Use XMLHttpRequest to perform a GET request to "api/films/"
-  //   with the filmId appended.
-  // * On success, if a response was received parse the film data
-  //   and pass the film object to displayFilm().
-  // * On failure, or if no response text was received, put "Film not found"
-  //   in the filmData div.
+
+  console.log("got to getPain");
 
   var xhr = new XMLHttpRequest();
 
@@ -42,17 +39,7 @@ function getPain() {
       // print out JSON data
       console.log(data[0].id);
       displayPain(data);
-      /*
-      	[
-      		Object,
-      		Object,
-      		Object,
-      		Object,
-      		Object
-      	]
-      */
-      // print out the id of the first object
-      // console.log(data[0].id); // 1
+
 
     } else if (xhr.readyState === 4 && xhr.status >= 400) {
       console.error('Pain not found');
@@ -63,28 +50,55 @@ function getPain() {
 
 }
 
-function displayPain(pain) {
 
+function getPainById(id) {
+
+  var xhr = new XMLHttpRequest();
+
+  xhr.open('GET', 'api/pain/' + id);
+
+  xhr.onreadystatechange = function() {
+    if (xhr.status < 400 && xhr.readyState === 4) {
+      // convert responseText to JSON
+      var data = JSON.parse(xhr.responseText);
+
+    } else if (xhr.readyState === 4 && xhr.status >= 400) {
+      console.error('Pain not found');
+    }
+  };
+
+  xhr.send(null);
+
+}
+
+
+
+function displayPain(pain) {
+  var d1 = document.getElementById('painData');
+
+  console.log("displayPain");
+
+  d1.textContent = '';
+  var total = 0;
+  var avg = 0;
+  var avgTotal = 0;
+  console.log(avg + ' start');
   pain.forEach(function(value, index, array) {
+
     console.log(value);
 
-    let p1 = document.createElement('tr');
-    let p2 = document.createElement('tr');
-    let p3 = document.createElement('tr');
-    let p4 = document.createElement('tr');
-    let p5 = document.createElement('tr');
-    let p6 = document.createElement('tr');
-    let p7 = document.createElement('br');
+    let p1 = document.createElement('td');
+    let p2 = document.createElement('td');
+    let p3 = document.createElement('td');
+    let p4 = document.createElement('td');
+    let p5 = document.createElement('td');
+    let p6 = document.createElement('td');
 
-    var d1 = document.getElementById('painData');
-
-    d1.append(p1);
-    d1.appendChild(p2);
-    d1.appendChild(p3);
-    d1.appendChild(p4);
-    d1.appendChild(p5);
-    d1.appendChild(p6);
-    d1.append(p7);
+    var pId = document.createElement('tr');
+    pId.addEventListener("click", function(e) {
+      popUp(value);
+    })
+    console.log("got here");
 
     p1.textContent = value.painLocation;
     p2.textContent = value.intensity;
@@ -92,8 +106,31 @@ function displayPain(pain) {
     p4.textContent = value.painEndDate;
     p5.textContent = value.painTrigger;
     p6.textContent = value.typeOfPain;
+    pId.textContent = value.id + " ";
+    console.log(p1);
+    pId.appendChild(p1);
+    pId.appendChild(p2);
+    pId.appendChild(p3);
+    pId.appendChild(p4);
+    pId.appendChild(p5);
+    pId.appendChild(p6);
+
+    d1.append(pId);
+    total += 1;
+    console.log(total);
+    console.log(value.intensity + "intensity");
+    avg += value.intensity;
+    console.log(avg + "==");
+
+    avgTotal = avg / total;
 
   });
+
+  var d2 = document.getElementById('avgPain');
+  console.log(avgTotal.toFixed(2));
+  d2.textContent = " ";
+  d2.textContent = "You average pain intensity is " + avgTotal.toFixed(2);
+  console.log(d2);
 
 }
 
@@ -108,11 +145,13 @@ function addPain() {
     if (xhr.readyState === 4) {
       if (xhr.status == 200 || xhr.status == 201) { // Ok or Created
         let painObject = JSON.parse(xhr.responseText);
-        getPain(painObject.id);
+        // getPain(painObject.id);
+        getPain();
+        console.log("Pain added");
+        alert("Pain Added");
       } else {
-        // console.log("POST request failed.");
-        // console.error(xhr.status + ': ' + xhr.responseText);
-        document.getElementById('painData').textContent = 'Film Not Found';
+
+        document.getElementById('painData').textContent = 'Pain Not Found';
         console.log(xhr.responseText);
       }
     }
@@ -127,7 +166,143 @@ function addPain() {
     typeOfPain: document.painForm.typeOfPain.value
   };
   console.log(painObject);
+  console.log("test object added   " + document.painForm.painLocation.value);
+  var painObjectJson = JSON.stringify(painObject); // Convert JS object to JSON string
 
+  xhr.send(painObjectJson);
+
+  document.painForm.reset();
+
+}
+
+function popUp(value) {
+
+  // store boolean in response variable
+  var response = confirm('Would you like to edit this entry? ' + 'Pain ID: ' + value.id);
+
+  // if 'ok'
+  if (response) {
+    document.getElementById('painId').value = value.id;
+    document.getElementById('painLocation').value = value.painLocation;
+    document.getElementById('intensity').value = value.intensity;
+    document.getElementById('painStartDate').value = value.painStartDate;
+    document.getElementById('painEndDate').value = value.painEndDate;
+    document.getElementById('painTrigger').value = value.painTrigger;
+    document.getElementById('typeOfPain').value = value.typeOfPain;
+    var update = document.createElement('input');
+    update.setAttribute('type', 'submit');
+    update.setAttribute('name', 'updatePain');
+    update.setAttribute('value', 'Update Pain');
+    update.textContent = '';
+    document.painForm.appendChild(update);
+
+    var del = document.createElement('input');
+    del.setAttribute('type', 'submit');
+    del.setAttribute('name', 'deletePain');
+    del.setAttribute('value', 'Delete Pain');
+    del.textContent = '';
+    document.painForm.appendChild(del);
+
+    document.painForm.updatePain.addEventListener('click', function(event) {
+      event.preventDefault();
+      updatePain(value.id);
+    })
+
+    document.painForm.deletePain.addEventListener('click', function(event) {
+      event.preventDefault();
+      var kill = confirm('Are you sure you want to delete this entry? Pain ID: ' + value.id);
+      if (kill) {
+        deletePain(value.id);
+      } else {
+        // popup message failure
+        alert('No changes made')
+      }
+
+    })
+
+  } else {
+    // popup message failure
+    alert('No changes made')
+  }
+
+}
+
+function updatePain(painId) {
+  // e.preventDefault();
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', 'api/pain/' + painId, true);
+
+  xhr.setRequestHeader("Content-type", "application/json"); // Specify JSON request body
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status == 200 || xhr.status == 201) { // Ok or Created
+        let painObject = JSON.parse(xhr.responseText);
+        // getPain(painObject.id);
+        getPain();
+        console.log("Pain updated");
+        alert("Pain updated");
+      } else {
+
+        document.getElementById('painData').textContent = 'Pain Could Not Be Updated';
+        console.log(xhr.responseText);
+      }
+    }
+  };
+
+  var painObject = {
+
+    painLocation: document.painForm.painLocation.value,
+    intensity: document.painForm.intensity.value,
+    painStartDate: document.painForm.painStartDate.value,
+    painEndDate: document.painForm.painEndDate.value,
+    painTrigger: document.painForm.painTrigger.value,
+    typeOfPain: document.painForm.typeOfPain.value
+  };
+  console.log(painObject);
+  console.log("Updated object   " + document.painForm.painLocation.value);
+  var painObjectJson = JSON.stringify(painObject); // Convert JS object to JSON string
+
+  xhr.send(painObjectJson);
+
+  document.painForm.reset();
+
+}
+
+function deletePain(painId) {
+  // e.preventDefault();
+  var xhr = new XMLHttpRequest();
+  xhr.open('DELETE', 'api/pain/' + painId, true);
+
+  xhr.setRequestHeader("Content-type", "application/json"); // Specify JSON request body
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status == 200 || xhr.status == 204) { // Ok or Created
+        let painObject = JSON.parse(xhr.responseText);
+        // getPain(painObject.id);
+        getPain();
+        console.log("Pain deleted");
+        alert("Pain deleted");
+      } else {
+
+        document.getElementById('painData').textContent = 'Pain Could Not Be Deleted';
+        console.log(xhr.responseText);
+      }
+    }
+  };
+
+  var painObject = {
+
+    painLocation: document.painForm.painLocation.value,
+    intensity: document.painForm.intensity.value,
+    painStartDate: document.painForm.painStartDate.value,
+    painEndDate: document.painForm.painEndDate.value,
+    painTrigger: document.painForm.painTrigger.value,
+    typeOfPain: document.painForm.typeOfPain.value
+  };
+  console.log(painObject);
+  console.log("Deleted object   " + document.painForm.painLocation.value);
   var painObjectJson = JSON.stringify(painObject); // Convert JS object to JSON string
 
   xhr.send(painObjectJson);

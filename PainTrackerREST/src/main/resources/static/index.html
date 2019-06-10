@@ -9,24 +9,29 @@
 
 <body>
 
-  <table <tr id="painData">
-    <td ></td>
-    </tr>
+  <table id="painData">
+    <!-- <tbody >
 
+    </tbody> -->
   </table>
 
 
   <br>
 
   <form name="painForm">
-    <input type='text' name='painLocation' placeholder='Pain Location' /><br>
-    <input type='text' name='intensity' placeholder='Intensity' /><br>
-    <input type='text' name='painStartDate' placeholder='When it started' /><br>
-    <input type='text' name='painEndDate' placeholder='When it ended' /><br>
-    <input type='text' name='painTrigger' placeholder='What triggered it?' /><br>
-    <input type='text' name='typeOfPain' placeholder='Type of pain' /><br>
+    <input type='hidden' name='painId' id='painId' />
+    <input type='text' name='painLocation' id='painLocation' placeholder='Pain Location' /><br>
+    <input type='text' name='intensity' id='intensity' placeholder='Intensity' /><br>
+    <input type='text' name='painStartDate' id='painStartDate' placeholder='When it started' /><br>
+    <input type='text' name='painEndDate' id='painEndDate' placeholder='When it ended' /><br>
+    <input type='text' name='painTrigger' id='painTrigger' placeholder='What triggered it?' /><br>
+    <input type='text' name='typeOfPain' id='typeOfPain' placeholder='Type of pain' /><br>
     <input type='submit' name='addPain' value='Add new pain' />
   </form>
+
+  <div id="avgPain">
+
+  </div>
 
 </body>
 

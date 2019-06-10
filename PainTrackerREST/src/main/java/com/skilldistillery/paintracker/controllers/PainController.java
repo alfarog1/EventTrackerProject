@@ -63,14 +63,16 @@ public class PainController {
 	    public void deleteComment(@PathVariable("id") Integer id, HttpServletResponse resp) {
 	       
 	        if (svc.findById(id) != null) {
-	           if( svc.deleteById(id)) {
-	                resp.setStatus(404);
-	            } else {
-	                resp.setStatus(204);
+//	           if( svc.deleteById(id)) {
+	        	svc.deleteById(id);
+//	           }
+//	                resp.setStatus(204);
+//	            } else {
+//	                resp.setStatus(404);
 	            }
-	        } else {
-	            resp.setStatus(404);
-	        }
+//	        } else {
+//	            resp.setStatus(404);
+//	        }
 	    }
 	 //CRUD - UPDATE
 	 @PutMapping("pain/{id}")

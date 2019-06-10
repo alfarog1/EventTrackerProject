@@ -11,6 +11,11 @@
 * Integrating a Spring REST project with a JPA project.
 * Performing basic CRUD operations.
 * Deploying an application to AWS
+* Adding scripts to a web application
+* Send asynchronous requests to Java controllers with JavaScript's `XMLHttpRequest
+* Consume and parse JSON responses with JavaScript
+* Build HTML with JavaScript
+* Send POST/PUT/DELETE requests with XMLHttpRequest
 
 #### Purpose and usage of the Application
 This application is made for pain management. The purpose is to track pain. Not only location, but intensity, triggers that caused the pain, but also start and end points. This makes it easier to diagnose the recurring issues.

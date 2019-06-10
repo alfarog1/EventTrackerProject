@@ -65,6 +65,7 @@ public class PainController {
 	        if (svc.findById(id) != null) {
 //	           if( svc.deleteById(id)) {
 	        	svc.deleteById(id);
+	        	resp.setStatus(204);
 //	           }
 //	                resp.setStatus(204);
 //	            } else {
